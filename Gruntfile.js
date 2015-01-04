@@ -25,7 +25,8 @@ module.exports = function(grunt) {
       fs.mkdirSync('node-webkit-src/tools');
     }
     var exec = require('child_process').exec;
-    exec('gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o node-webkit-src/tools/sfpasteboard sfpasteboard/sfpasteboard.m', done);
+    //exec('gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o node-webkit-src/tools/sfpasteboard sfpasteboard/sfpasteboard.m', done);
+    exec('go build -o node-webkit-src/tools/sfpasteboard sfpasteboard/*.go', done);
   });
 
   grunt.registerTask('build', ['sfpasteboard', 'nodewebkit']);
