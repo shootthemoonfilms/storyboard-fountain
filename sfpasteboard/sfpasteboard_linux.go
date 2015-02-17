@@ -3,6 +3,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/mattn/go-gtk/gdk"
 	"github.com/mattn/go-gtk/gdkpixbuf"
 	"github.com/mattn/go-gtk/gtk"
@@ -39,10 +40,21 @@ func main() {
 	} else {
 		// No argument, receive from clipboard
 
-		// gtk_clipboard_request_image is not implemented. :(
+		// gtk_clipboard_request_image implemented in https://github.com/mattn/go-gtk/pull/224
+		gtk.MainIterationDo(true)
+		pixbuf := clipboard.WaitForText()
 		gtk.MainIterationDo(true)
 
+		// Save to file
+		tmpfile := os.TempDir() + string(os.PathSeparator) + os.Args[0]
+		// err :=
+		pixbuf.Save(tmpfile, "image/png", "")
+		// Attempt to replicate sfpasteboard behavior -- drop to stdout
+		fmt.Println(tmpfile)
+
+		// TODO: check for gtk error from pixbuf.Save, return 1
+
 		// Since we're not doing anything, set it to fail.
-		os.Exit(1)
+		os.Exit(0)
 	}
 }
