@@ -42,7 +42,7 @@ func main() {
 
 		// gtk_clipboard_request_image implemented in https://github.com/mattn/go-gtk/pull/224
 		gtk.MainIterationDo(true)
-		pixbuf := clipboard.WaitForText()
+		pixbuf := clipboard.WaitForImage()
 		gtk.MainIterationDo(true)
 
 		// Save to file
